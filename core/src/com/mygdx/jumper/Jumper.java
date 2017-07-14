@@ -24,7 +24,22 @@ public class Jumper extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		loadData();
+		init();
+		
+		
+	}
+
+	private void init() {
 		batch = new SpriteBatch();
+		music.play();
+		
+	}
+
+	private void loadData() {
+		playerTexture = new Texture("mario2.png");
+		platformTexture = new Texture("platform.png");
+		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		
 	}
 
