@@ -2,6 +2,7 @@ package com.mygdx.jumper;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -70,10 +71,22 @@ public class Jumper extends ApplicationAdapter {
 	}
 	
 	private void update() {
-		// TODO Auto-generated method stub
+		handleInput();
 		
 	}
-
+	
+	public void handleInput() {
+		if (Gdx.input.isKeyPressed(Keys.A)) {
+			player.x -= 500 * Gdx.graphics.getDeltaTime();
+		}
+		if (Gdx.input.isKeyPressed(Keys.D)) {
+			player.x += 500 * Gdx.graphics.getDeltaTime();
+		}
+		if (Gdx.input.justTouched()) {
+			player.jump();
+		}
+	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
