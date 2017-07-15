@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 public class Jumper extends ApplicationAdapter {
@@ -26,6 +27,17 @@ public class Jumper extends ApplicationAdapter {
 	public void create () {
 		loadData();
 		init();
+		camera = new OrthographicCamera(480, 800);
+		player = new JumpPlayer(playerTexture);
+		platformArray = new Array<Platform>();
+		
+		//Creating platforms
+		for (int i = 1; i < 3; i++) {
+			Platform p = new Platform(platformTexture);
+			p.x = MathUtils.random(0, 480);
+			p.y = 200 * i;
+			platformArray.add(p);
+		}
 		
 		
 	}
@@ -50,6 +62,9 @@ public class Jumper extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
+		for (Platform p : platformArray) {
+			p.draw(batch);
+		}
 		player.draw(batch);
 		batch.end();
 	}
