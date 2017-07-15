@@ -63,6 +63,7 @@ public class Jumper extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
+		batch.setProjectionMatrix(camera.combined);
 		for (Platform p : platformArray) {
 			p.draw(batch);
 		}
@@ -72,6 +73,10 @@ public class Jumper extends ApplicationAdapter {
 	
 	private void update() {
 		handleInput();
+		camera.update();
+		camera.position.set(player.x + player.width/2,
+							player.y + 300,
+							0);
 		
 	}
 	
