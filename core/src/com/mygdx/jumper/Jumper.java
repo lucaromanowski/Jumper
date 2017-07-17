@@ -18,7 +18,7 @@ public class Jumper extends ApplicationAdapter {
 	private Array<Platform> platformArray;
 	private OrthographicCamera camera;
 	
-	private float gravity = -20;
+	private float gravity = -13;
 	
 	SpriteBatch batch;
 	
@@ -78,8 +78,32 @@ public class Jumper extends ApplicationAdapter {
 							player.y + 300,
 							0);
 		
+		player.y += player.jumpVelocity * Gdx.graphics.getDeltaTime();
+		
+		//Jumping
+		if (player.y > 0) {
+			player.y += gravity;
+		}else {
+			player.y = 0;
+			player.canJump = true;
+			player.jumpVelocity = 0;
+		}
+		
+		//Platform colliding
+		for (Platform p : platformArray) {
+			if (isPlayerOnPlatform(p)) {
+				player.canJump = true;
+				player.jumpVelocity = 0;
+				player.y = p.y + p.height;
+			}
+		}
+		
 	}
 	
+	private boolean isPlayerOnPlatform(Platform p) {
+		return player.jumpVelocity <= 0 && player.overlaps(p) && !(player.y <= p.y);
+	}
+
 	public void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.A)) {
 			player.x -= 500 * Gdx.graphics.getDeltaTime();
